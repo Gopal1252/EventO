@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate') %>
+    <h1>Edit event</h1>
+    <form action="/events/<%=event._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="event[title]" value="<%= event.title %>">
+        </div>
+        <div>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="event[location]" value="<%= event.location %>">
+        </div>
+        <button>Update Event</button>
+    </form>
+    <a href="/events<%=event._id %>">Back to Events</a>

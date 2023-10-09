@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate') %>
+    <h1>make new event</h1>
+    <form action="/events" method="POST">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="event[title]">
+        </div>
+        <div>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="event[location]">
+        </div>
+        <button>Add Event</button>
+    </form>
+    <a href="/events">All Events</a>

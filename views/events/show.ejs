@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate') %>
+    <h1><%= event.title %></h1>
+    <h2><%= event.location %></h2>
+    <p>
+        <form action="/events/<%=event._id%>?_method=DELETE" method="POST">
+            <button>Delete</button>
+        </form>
+    </p>
+    <footer>
+        <a href="/events/<%=event._id %>/edit">Edit</a>
+        <a href="/events">All Events</a>
+    </footer>

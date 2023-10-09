@@ -1,0 +1,10 @@
+<% layout('layouts/boilerplate') %>
+    <h1>Upcoming Events</h1>
+    <div>
+        <a href="/events/new">List An Event</a>
+    </div>
+    <ul>
+        <% for(let event of events){%>
+            <li><a href="/events/<%=event._id %>"><%= event.title %></a></li>
+        <% } %>
+    </ul>
