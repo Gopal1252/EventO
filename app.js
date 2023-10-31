@@ -18,9 +18,10 @@ async function main() {
 }
 
 
-const app = express();
+const app = express(); 
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')));
 app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
 
@@ -34,14 +35,18 @@ app.get('/', (req,res) =>{
   res.render('home');
 })
 
+app.get('/temp', (req,res) =>{
+  res.render('events/temp');
+})
+
 //renders the index of Events {Basically Shows all the current events going on}
 app.get('/events', async (req,res) =>{
   const events = await Event.find({});
   res.render('events/index', {events});
 })
 
-//to make new event {need two routes, first for rendering the formm when the link/buttonn is clicked and second the post route for storing the nnewly made event}
-app.get('/events/new', async (req,res) =>{
+//to make new event {need two routes, first for rendering the form when the link/buttonn is clicked and second the post route for storing the nnewly made event}
+app.get('/new', async (req,res) =>{
   res.render('events/new');
 })
 app.post('/events', async (req, res) =>{
