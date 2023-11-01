@@ -12,7 +12,7 @@ main().catch(err => {
     console.log(err);
 });
 
-async function main() {
+async function main() { 
   await mongoose.connect('mongodb://127.0.0.1:27017/EventO_DB');
   console.log("Database Connected");
 }
@@ -35,18 +35,21 @@ app.get('/', (req,res) =>{
   res.render('home');
 })
 
-app.get('/temp', (req,res) =>{
-  res.render('events/temp');
-})
-
 //renders the index of Events {Basically Shows all the current events going on}
 app.get('/events', async (req,res) =>{
   const events = await Event.find({});
   res.render('events/index', {events});
 })
 
+app.get('/about', (req,res) =>{
+  res.render('about');
+})
+app.get('/contact', (req,res) =>{
+  res.render('contact');
+})
+
 //to make new event {need two routes, first for rendering the form when the link/buttonn is clicked and second the post route for storing the nnewly made event}
-app.get('/new', async (req,res) =>{
+app.get('/events/new', async (req,res) =>{
   res.render('events/new');
 })
 app.post('/events', async (req, res) =>{

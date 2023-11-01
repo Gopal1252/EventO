@@ -1,11 +1,30 @@
 <% layout('layouts/boilerplate') %>
-    <h1>Upcoming Events</h1>
-    <div>
-        <a href="/events/new">List An Event</a>
-    </div>
-    <ul>
-        <% for(let event of events){%>
-            <li><a href="/events/<%=event._id %>"><%= event.title %></a></li>
-        <% } %>
-    </ul>
-  
+    <h1 class="m-4 text-3xl text-center">Upcoming Events</h1>
+    <% for(let event of events){%>
+        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
+            <a href="#">
+                <img class="rounded-t-lg" src="<%= event.image %>" alt="" />
+            </a>
+            <div class="p-5">
+                <a href="#">
+                    <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900"><%= event.title %></h5>
+                </a>
+                <hr class="text-black">
+                <div class="text-xl">
+                    
+                    <%= event.location %>
+                </div>
+                <div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="css-0"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 10.0714C5.5 6.2881 8.96304 4 12 4C15.037 4 18.5 6.2881 18.5 10.0714C18.5 12.4463 17.3299 14.5887 15.8656 16.3303C14.4439 18.0211 12.8224 19.2405 12 19.8053C11.1776 19.2405 9.55612 18.0211 8.13442 16.3303C6.67006 14.5887 5.5 12.4463 5.5 10.0714ZM4.5 10.0714C4.5 5.57143 8.59091 3 12 3C15.4091 3 19.5 5.57143 19.5 10.0714C19.5 15.4847 14.1819 19.5305 12.5021 20.6734C12.1968 20.8812 11.8032 20.8812 11.4979 20.6734C9.81808 19.5305 4.5 15.4847 4.5 10.0714ZM10 10.5C10 9.39543 10.8954 8.5 12 8.5C13.1046 8.5 14 9.39543 14 10.5C14 11.6046 13.1046 12.5 12 12.5C10.8954 12.5 10 11.6046 10 10.5ZM12 7.5C10.3431 7.5 9 8.84315 9 10.5C9 12.1569 10.3431 13.5 12 13.5C13.6569 13.5 15 12.1569 15 10.5C15 8.84315 13.6569 7.5 12 7.5Z" fill="#45474D"></path></svg>
+                    <%= event.venue %>
+                </div>
+                <div class="my-2 bg-blue-100 p-1.5 rounded-md font-semibold">
+                    ₹ <%= event.price %> ONWARDS
+                </div>
+                <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    Read more
+                </a>
+            </div>
+        </div>
+    <% } %>
+   
