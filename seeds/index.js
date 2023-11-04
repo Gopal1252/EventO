@@ -19,18 +19,36 @@ async function main() {
 
 const sample = (array) => array[Math.floor(Math.random() * array.length)]
 
+function generateRandomDate(from, to) {
+    return new Date(
+      from.getTime() +
+        Math.random() * (to.getTime() - from.getTime()),
+    );
+}
+
+function generateRandomTime() {
+    const hour = Math.floor(Math.random() * 12) + 1;
+    const minute = Math.floor(Math.random() * 60);
+    const amPm = Math.random() < 0.5 ? "AM" : "PM";
+    return `${hour}:${minute < 10 ? "0" : ""}${minute}${amPm}`;
+}
+
 const seedDB = async ()=>{
     await Event.deleteMany({});//so that every time we reseed, the older events get deleted
     for(let i=0;i<50;i++){
         const random200 = Math.floor(Math.random()*200);///gives a random number from 0 to 200
-        const price = Math.floor(Math.random()*20) + 10;
+        const price = Math.floor(Math.random()*2000) + 10;
+        const date = generateRandomDate(new Date(2023, 11, 1), new Date(2023,12,31));
+        const time = generateRandomTime();
         const event = new Event({
             location: `${IndianCities[random200].city}, ${IndianCities[random200].state}`,
             title: `${sample(descriptors)} ${sample(names)}`,//descriptors, names and venues are being exported from the seeds folders
             venue: `${sample(venues)}`,
             image: `https://source.unsplash.com/collection/22465791`,
             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione adipisci laudantium sequi, corporis officiis quam aliquam libero sit reprehenderit id dolorum, quia perspiciatis voluptates sint. Itaque molestiae modi assumenda ad?',
-            price
+            price,
+            date,
+            time
         })
         await event.save();
     }

@@ -8,7 +8,9 @@ const EventSchema = new Schema({
     price: Number,//price per ticket
     description : String,//description of the event
     location: String,//location(city,State) of the event
-    venue:String//venue of the event(actually venue like-> some auditorium/stadium,etc)
+    venue:String,//venue of the event(actually venue like-> some auditorium/stadium,etc)
+    date:Date,
+    time:String
 })
 
 module.exports = mongoose.model('Event',EventSchema)

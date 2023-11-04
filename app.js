@@ -60,7 +60,7 @@ app.post('/events', async (req, res) =>{
 
 //show route {make sure comes after new}
 app.get('/events/:id', async (req,res)=>{
-  const event = await Event.findById(req.params.id)
+  const event = await Event.findById(req.params.id) 
   res.render('events/show',{event});
 })
 

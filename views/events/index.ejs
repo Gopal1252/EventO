@@ -1,13 +1,16 @@
 <% layout('layouts/boilerplate') %>
     <h1 class="m-4 text-3xl text-center">Upcoming Events</h1>
     <div class="flex flex-wrap justify-around">
+        <% const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        %>
         <% for(let event of events){%>
-            <div class="max-w-sm bg-white border border-gray-200 rounded-lg mb-7 cursor-pointer hover:shadow-lg">
+            <div class="max-w-sm bg-white border border-gray-200 rounded-lg mb-7 cursor-pointer hover:shadow-lg mx-5">
                 <a href="#">
                     <img class="rounded-t-lg" src="<%= event.image %>" alt="" />
                 </a>
                 <div class="p-3">
-                    <a href="#">
+                    <a href="#"> 
                         <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900"><%= event.title %></h5>
                     </a>
                     <div class="flex mb-1">
@@ -15,7 +18,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                         </svg> 
                         <div class="ml-2">
-                            <%= event.location %>
+                            <%= months[event.date.getMonth()] %> <%= event.date.getDate() %> | <%= event.time %>
                         </div>                         
                     </div>
                     <div class="flex">
@@ -24,14 +27,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                         </svg>    
                         <div class="ml-2">
-                            <%= event.venue %>
+                            <%= event.venue %> | <%= event.location %>
                         </div>
                     </div>
                     <div class="my-2 bg-blue-100 p-1.5 rounded-md font-semibold flex justify-between">
                         <p>₹<%= event.price %> ONWARDS</p>
                         <p>| BUY NOW</p>
                     </div>
-                    <a href="/events/<%= event._id %>" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                    <a href="/events/<%= event._id %>" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#32c0f0] rounded-lg hover:bg-[#32a4f0]">
                         Know More
                     </a>
                 </div>
