@@ -38,7 +38,7 @@ const seedDB = async ()=>{
     for(let i=0;i<50;i++){
         const random200 = Math.floor(Math.random()*200);///gives a random number from 0 to 200
         const price = Math.floor(Math.random()*2000) + 10;
-        const date = generateRandomDate(new Date(2023, 11, 1), new Date(2023,12,31));
+        const date = generateRandomDate(new Date(2023, 10, 1), new Date(2023,11,31));
         const time = generateRandomTime();
         const event = new Event({
             location: `${IndianCities[random200].city}, ${IndianCities[random200].state}`,
