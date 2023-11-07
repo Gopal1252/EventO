@@ -7,9 +7,13 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override');//for overriding the POST method and make it PUT for the edit forms
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
-const events = require('./routes/events');
-const comments = require('./routes/comments');
+const userRoutes = require('./routes/users');
+const eventRoutes = require('./routes/events');
+const commentRoutes = require('./routes/comments');
 
 //connecting mongoose
 mongoose.set('strictQuery', true);
@@ -49,14 +53,23 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next) =>{
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
 })
 
-app.use('/events', events);
-app.use('/events/:id/comments',comments);
+app.use('/',userRoutes);
+app.use('/events', eventRoutes);
+app.use('/events/:id/comments',commentRoutes);
+
 
 //renders the home page
 app.get('/', (req,res) =>{
