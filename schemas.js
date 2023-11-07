@@ -12,3 +12,9 @@ module.exports.eventSchema = Joi.object({
       image  : Joi.string().required(),
     }).required()//event should be an object and it is required
 });
+
+module.exports.commentSchema = Joi.object({
+    comment: Joi.object({
+        body : Joi.string().required()
+    }).required()
+});

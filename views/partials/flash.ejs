@@ -1,0 +1,64 @@
+<% if(success && success.length){ %>
+    <div class="mt-4 mx-4 px-4 rounded-md bg-green-100 max-w-5xl left-0 absolute">
+        <div class="flex justify-between py-3">
+            <div class="flex">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-green-500 mt-0.5">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                      </svg>                      
+                </div>
+                <div class="self-center ml-3">
+                    <span class="text-green-600 font-semibold">
+                        Success
+                    </span>
+                    <p class="text-green-600 mt-1">
+                        <%= success %>
+                    </p>
+                </div>
+            </div>
+            <button class="self-start text-green-500 alert-del ml-3 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </div>
+<% } %>
+<% if(error && error.length){ %>
+    <div class="mt-4 mx-4 px-4 rounded-md border-red-500 bg-red-100 md:max-w-5xl left-0 absolute">
+        <div class="flex justify-between py-3">
+            <div class="flex">
+                <div>
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-red-500"">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                    </svg>                      
+                </div>
+                <div class="self-center ml-3">
+                    <span class="text-red-600 font-semibold">
+                        Error
+                    </span>
+                    <p class="text-red-600 mt-1">
+                        <%= error %>
+                    </p>
+                </div>
+            </div>
+            <button class="self-start text-red-500 alert-del">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </div>
+<% } %>
+
+<script>
+    const alert_del = document.querySelectorAll('.alert-del');
+        alert_del.forEach((x) =>
+        x.addEventListener('click', function () {
+            x.parentElement.classList.add('hidden');
+        })
+    );
+</script>

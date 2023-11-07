@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="/views/output.css">
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.1/dist/flowbite.min.css" />
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <%- body %>
+    <div>
+        <%- include('../partials/flash') %>
+        <%- body %>
+    </div>
     <!-- <%- include('../partials/footer') %> -->
 </body>
 </html> 
