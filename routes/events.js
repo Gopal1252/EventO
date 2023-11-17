@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const {eventSchema} = require('../schemas.js');
 const ExpressError = require('../utils/ExpressError')
 const Event = require('../models/event');//requiring the Event model
+const {isLoggedIn} = require('../middleware');
 
 const validateEvent = (req,res,next) =>{
     const {error} = eventSchema.validate(req.body);//passing the data to the eventSchema
@@ -22,10 +23,11 @@ router.get('/', catchAsync(async (req,res) =>{
   }))
   
 //to make new event {need two routes, first for rendering the form when the link/buttonn is clicked and second the post route for storing the nnewly made event}
-router.get('/new', catchAsync(async (req,res) =>{
+router.get('/new', isLoggedIn, catchAsync(async (req,res) =>{
+  
   res.render('events/new');
 }))
-router.post('/', validateEvent, catchAsync(async (req, res,next) =>{
+router.post('/', isLoggedIn, validateEvent, catchAsync(async (req, res,next) =>{
   const event = new Event(req.body.event);//making the new event
   await event.save();//saving the new event
   req.flash('success', 'Successfully listed your event'); 
@@ -43,7 +45,7 @@ router.get('/:id', catchAsync(async (req,res)=>{
 }))
 
 //for editing, need 2 routes
-router.get('/:id/edit', catchAsync(async (req, res) =>{
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) =>{
   const event = await Event.findById(req.params.id)
   if(!event){
     req.flash('error','Cannot find that event');
@@ -51,7 +53,7 @@ router.get('/:id/edit', catchAsync(async (req, res) =>{
   }
   res.render('events/edit',{event});
 }))
-router.put('/:id', validateEvent, catchAsync(async (req, res) =>{
+router.put('/:id', isLoggedIn, validateEvent, catchAsync(async (req, res) =>{
   const {id} = req.params;
   const event = await Event.findByIdAndUpdate(id, {...req.body.event});//finding by id ad updating the contents of the event in the database
   req.flash('success', 'Successfully updated your event'); 
