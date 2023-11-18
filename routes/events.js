@@ -1,20 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
-const {eventSchema} = require('../schemas.js');
-const ExpressError = require('../utils/ExpressError')
 const Event = require('../models/event');//requiring the Event model
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, isOrganizer, validateEvent} = require('../middleware');
 
-const validateEvent = (req,res,next) =>{
-    const {error} = eventSchema.validate(req.body);//passing the data to the eventSchema
-    if(error){
-      const msg = error.details.map((el=> el.message)).join(',')
-      throw new ExpressError(msg, 400);
-    }else{
-      next();
-    }
-}
 
 //renders the index of Events {Basically Shows all the current events going on}
 router.get('/', catchAsync(async (req,res) =>{
@@ -29,6 +18,7 @@ router.get('/new', isLoggedIn, catchAsync(async (req,res) =>{
 }))
 router.post('/', isLoggedIn, validateEvent, catchAsync(async (req, res,next) =>{
   const event = new Event(req.body.event);//making the new event
+  event.organizer = req.user._id//saving the organizer's id
   await event.save();//saving the new event
   req.flash('success', 'Successfully listed your event'); 
   res.redirect(`/events/${event._id}`);//redirecting to the newely formed event
@@ -36,7 +26,12 @@ router.post('/', isLoggedIn, validateEvent, catchAsync(async (req, res,next) =>{
 
 //show route {make sure comes after new}
 router.get('/:id', catchAsync(async (req,res)=>{
-  const event = await Event.findById(req.params.id).populate('comments') 
+  const event = await Event.findById(req.params.id).populate({
+    path : 'comments',
+    populate : {
+      path : 'author'
+    }
+  }).populate('organizer'); 
   if(!event){
     req.flash('error','Cannot find that event');
     return res.redirect('/events');
@@ -45,15 +40,16 @@ router.get('/:id', catchAsync(async (req,res)=>{
 }))
 
 //for editing, need 2 routes
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) =>{
-  const event = await Event.findById(req.params.id)
+router.get('/:id/edit', isLoggedIn, isOrganizer, catchAsync(async (req, res) =>{
+  const {id} = req.params;
+  const event = await Event.findById(id);
   if(!event){
     req.flash('error','Cannot find that event');
     return res.redirect('/events');
   }
   res.render('events/edit',{event});
 }))
-router.put('/:id', isLoggedIn, validateEvent, catchAsync(async (req, res) =>{
+router.put('/:id', isLoggedIn, isOrganizer, validateEvent, catchAsync(async (req, res) =>{
   const {id} = req.params;
   const event = await Event.findByIdAndUpdate(id, {...req.body.event});//finding by id ad updating the contents of the event in the database
   req.flash('success', 'Successfully updated your event'); 
@@ -61,7 +57,7 @@ router.put('/:id', isLoggedIn, validateEvent, catchAsync(async (req, res) =>{
 }))
 
 //delete event route
-router.delete('/:id', catchAsync(async (req, res) =>{
+router.delete('/:id', isLoggedIn, isOrganizer, catchAsync(async (req, res) =>{
   const {id} = req.params;
   await Event.findByIdAndDelete(id);
   req.flash('success', 'Successfully deleted your event'); 

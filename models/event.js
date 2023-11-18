@@ -12,6 +12,10 @@ const EventSchema = new Schema({
     venue:String,//venue of the event(actually venue like-> some auditorium/stadium,etc)
     date:Date,
     time:String, 
+    organizer: {
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
     comments: [
         {
             type : Schema.Types.ObjectId,

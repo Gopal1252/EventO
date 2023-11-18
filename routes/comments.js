@@ -1,24 +1,16 @@
 const express = require('express');
 const router = express.Router({mergeParams : true});
-const {commentSchema} = require('../schemas.js');
+const {validateComment, isLoggedIn, isCommentAuthor} = require('../middleware.js');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError')
 const Event = require('../models/event');//requiring the Event model
 const Comment = require('../models/comment.js');
 
-const validateComment = (req,res,next) =>{
-  const {error} = commentSchema.validate(req.body);//passing the data to the eventSchema
-  if(error){
-    const msg = error.details.map((el=> el.message)).join(',')
-    throw new ExpressError(msg, 400);
-  }else{
-    next();
-  }
-}
 
-router.post('/', validateComment, catchAsync(async(req,res,next)=>{
+router.post('/', isLoggedIn, validateComment, catchAsync(async(req,res,next)=>{
   const event = await Event.findById(req.params.id);
   const comment = new Comment(req.body.comment);
+  comment.author = req.user._id;
   comment["date"] = new Date();
   event.comments.push(comment);
   await comment.save();
@@ -27,7 +19,7 @@ router.post('/', validateComment, catchAsync(async(req,res,next)=>{
   res.redirect(`/events/${event._id}`);
 }))
   
-router.delete('/:commentId', catchAsync(async(req,res) =>{
+router.delete('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async(req,res) =>{
   const {id, commentId } = req.params;
   await Event.findByIdAndUpdate(id,{$pull : {comments: commentId}});
   await Comment.findByIdAndDelete(commentId);

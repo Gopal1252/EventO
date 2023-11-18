@@ -14,6 +14,7 @@
                 <div class="flex justify-between items-center my-3">
                     <h2 class="text-2xl font-bold text-gray-900">Discussion (<%= event.comments.length %>)</h2>
                 </div>
+                <% if(currentUser){ %>
                 <form action="/events/<%= event._id %>/comments" method="POST" class="mb-6">
                     <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-400">
                         <label for="body" class="sr-only">Your comment</label>
@@ -26,6 +27,7 @@
                         Post comment
                     </button>
                 </form>
+                <% } %>
                 <% for(let comment of event.comments){ %>
                 <article class="p-6 text-base bg-white rounded-lg  mb-2 max-w-3xl">
                     <footer class="flex justify-between items-center mb-2">
@@ -33,9 +35,10 @@
                             <p class="inline-flex items-center mr-3 text-sm text-gray-900 font-semibold"><img
                                     class="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                    alt="UserName">UserName</p>
+                                    alt="UserName"><%= comment.author.username %></p>
                             <p class="text-sm text-gray-600"><%= months[comment.date.getMonth()] %>, <%= comment.date.getDate() %> <%= comment.date.getFullYear() %></p>
                         </div>
+                        <% if(currentUser && comment.author.equals(currentUser._id)){ %>
                         <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
                             class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50"
                             type="button">
@@ -53,7 +56,7 @@
                                         class="block py-2 px-4 hover:bg-gray-100">Edit</a>
                                 </li> -->
                                 <li>
-                                    <form action="/events/<%= event._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="hover:bg-gray-100">
+                                    <form action="/events/<%= event._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST" class="hover:bg-gray-100">
                                         <button class="block py-2 px-4 hover:bg-gray-100">Remove</button>
                                     </form>
                                 </li>
@@ -63,6 +66,7 @@
                                 </li> -->
                             </ul>
                         </div>
+                        <% } %>
                     </footer>
                     <p class="text-gray-500 break-words"><%= comment.body %></p>
                 </article>
@@ -96,12 +100,14 @@
                     <a href="#" class="border bg-[#ed0f66] text-white px-6 rounded-md text-2xl py-2">Buy Now</a>
                 </div>
             </div>
+            <% if(currentUser && event.organizer.equals(currentUser._id)){ %>
             <div class="border border-gray-200 rounded-lg w-[26rem] p-4 mt-4 flex justify-around">
                 <a href="/events/<%=event._id %>/edit" class="border bg-[#32c0f0] text-white px-4 py-2 rounded-md">Edit Event</a>
                 <form action="/events/<%=event._id%>?_method=DELETE" method="POST">
                     <button class="border bg-[#32c0f0] text-white px-4 py-2 rounded-md">Delete Event</button>
                 </form>
             </div> 
+            <% } %>
         </div>
     </div>
     

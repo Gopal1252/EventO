@@ -41,6 +41,7 @@ const seedDB = async ()=>{
         const date = generateRandomDate(new Date(2023, 10, 1), new Date(2023,11,31));
         const time = generateRandomTime();
         const event = new Event({
+            organizer : '65575221053a3ba4d4cc5cc1',
             location: `${IndianCities[random200].city}, ${IndianCities[random200].state}`,
             title: `${sample(descriptors)} ${sample(names)}`,//descriptors, names and venues are being exported from the seeds folders
             venue: `${sample(venues)}`,
