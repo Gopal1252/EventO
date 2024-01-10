@@ -2,10 +2,21 @@ const mongoose = require('mongoose');
 const Comment = require('./comment')
 const Schema = mongoose.Schema;
 
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+ImageSchema.virtual('thumbnail').get(function(){//adding a virtual property to the images to make the thumbnails of smaller size
+    return this.url.replace('/upload', '/upload/w_200');
+});
+
+const opts = {toJSON: {virtuals: true}};
+
 //basically EventO will sell tickets of events
 const EventSchema = new Schema({
     title: String,//title of the event
-    image: String,//pictures posted of the event
+    images: [ImageSchema],
     price: Number,//price per ticket
     description : String,//description of the event
     location: String,//location(city,State) of the event

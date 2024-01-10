@@ -45,11 +45,20 @@ const seedDB = async ()=>{
             location: `${IndianCities[random200].city}, ${IndianCities[random200].state}`,
             title: `${sample(descriptors)} ${sample(names)}`,//descriptors, names and venues are being exported from the seeds folders
             venue: `${sample(venues)}`,
-            image: `https://source.unsplash.com/collection/22465791`,
             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione adipisci laudantium sequi, corporis officiis quam aliquam libero sit reprehenderit id dolorum, quia perspiciatis voluptates sint. Itaque molestiae modi assumenda ad?',
             price,
             date,
-            time
+            time,
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/dk8h5rpgt/image/upload/v1704875015/EventO/iv4pfl20go5kd65oiwrd.jpg',
+                  filename: 'EventO/iv4pfl20go5kd65oiwrd'
+                },
+                {
+                  url: 'https://res.cloudinary.com/dk8h5rpgt/image/upload/v1704875022/EventO/uclvzwnfqfbw6lfs9yfr.jpg',
+                  filename: 'EventO/uclvzwnfqfbw6lfs9yfr'
+                }
+              ]
         })
         await event.save();
     }

@@ -9,8 +9,9 @@ module.exports.eventSchema = Joi.object({
       venue : Joi.string().required(),
       date : Joi.date().required(),
       time : Joi.string().required(),
-      image  : Joi.string().required(),
-    }).required()//event should be an object and it is required
+    //   image  : Joi.string().required(),
+    }).required(),//event should be an object and it is required
+    deleteImages: Joi.array()
 });
 
 module.exports.commentSchema = Joi.object({
