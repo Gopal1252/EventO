@@ -7,7 +7,11 @@
         <% for(let event of events){%>
             <div class="max-w-sm bg-white border border-gray-200 rounded-lg mb-7 cursor-pointer hover:shadow-lg mx-5">
                 <a href="#">
-                    <img class="rounded-t-lg" src="<%= event.images[0].url %>" alt="" />
+                    <% if(event.images.length){ %>
+                        <img class="rounded-t-lg" src="<%= event.images[0].url %>" alt="" />
+                    <% }else{ %>
+                        <img class="rounded-t-lg" src="https://res.cloudinary.com/dk8h5rpgt/image/upload/v1704875015/EventO/iv4pfl20go5kd65oiwrd.jpg" alt="" />
+                    <% } %>
                 </a>
                 <div class="p-3">
                     <a href="#"> 

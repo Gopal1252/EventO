@@ -1,4 +1,7 @@
 const Event = require('../models/event');//requiring the Event model
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({accessToken : mapBoxToken});
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req,res) =>{
@@ -11,7 +14,12 @@ module.exports.renderNewForm = async (req,res) =>{
 }
 
 module.exports.createEvent = async (req, res,next) =>{
+    const geoData = await geocoder.forwardGeocode({
+      query: req.body.event.venue + " " + req.body.event.location,
+      limit: 1
+    }).send()
     const event = new Event(req.body.event);//making the new event
+    event.geometry = geoData.body.features[0].geometry;
     event.images = req.files.map(f=>({url : f.path, filename : f.filename}));
     event.organizer = req.user._id//saving the organizer's id
     await event.save();//saving the new event

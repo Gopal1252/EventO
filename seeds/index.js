@@ -47,6 +47,13 @@ const seedDB = async ()=>{
             venue: `${sample(venues)}`,
             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione adipisci laudantium sequi, corporis officiis quam aliquam libero sit reprehenderit id dolorum, quia perspiciatis voluptates sint. Itaque molestiae modi assumenda ad?',
             price,
+            geometry: { 
+              type: 'Point', 
+              coordinates: [
+                  IndianCities[random200].lng,
+                  IndianCities[random200].lat
+              ] 
+            },
             date,
             time,
             images: [

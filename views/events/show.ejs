@@ -140,6 +140,10 @@
                 </form>
             </div> 
             <% } %>
+            <div class="border border-gray-200 rounded-lg w-[26rem] p-4 mt-4">
+                <h2 class="font-semibold mb-2">Get Directions</h2>
+                <div id='map' style='width: 380px; height: 350px;'></div>
+            </div>
         </div>
     </div>
 
@@ -156,3 +160,9 @@
         });
     </script>
     <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const evnt = <%- JSON.stringify(event)%>
+    </script>
+    <script src="/javascripts/showPageMap.js"></script>

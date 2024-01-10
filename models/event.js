@@ -17,6 +17,17 @@ const opts = {toJSON: {virtuals: true}};
 const EventSchema = new Schema({
     title: String,//title of the event
     images: [ImageSchema],
+    geometry: {
+        type: {
+            type: String, 
+            enum: ['Point'], 
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     price: Number,//price per ticket
     description : String,//description of the event
     location: String,//location(city,State) of the event
