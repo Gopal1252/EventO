@@ -54,8 +54,12 @@ module.exports.renderEditForm = async (req, res) =>{
 
 module.exports.updateEvent = async (req, res) =>{
     const {id} = req.params;
-    // console.log(req.body);
+    const geoData = await geocoder.forwardGeocode({
+      query: req.body.event.venue + " " + req.body.event.location,
+      limit: 1
+    }).send()
     const event = await Event.findByIdAndUpdate(id, {...req.body.event});//finding by id ad updating the contents of the event in the database
+    event.geometry = geoData.body.features[0].geometry;
     const imgs = req.files.map(f=>({url : f.path, filename : f.filename}));
     event.images.push(...imgs);
     await event.save();
