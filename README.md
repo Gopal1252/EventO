@@ -1,5 +1,5 @@
 # EventO
-An Event Listing and rating website
+An Event Listing and reviewing website
 <img width="1469" alt="Screenshot 2024-01-13 at 4 20 11 AM" src="https://github.com/Gopal1252/EventO/assets/93401686/4064fa3f-6015-4329-9b54-83a7bf6fe9c3">
 <img width="1470" alt="Screenshot 2023-11-22 at 10 55 56 PM" src="https://github.com/Gopal1252/EventO/assets/93401686/f1283793-49c0-41e1-9d2e-87e93e199465">
 <img width="1469" alt="Screenshot 2024-01-13 at 4 21 55 AM" src="https://github.com/Gopal1252/EventO/assets/93401686/dfb560de-f639-4165-8242-7b005dfe7766">
