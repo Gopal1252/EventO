@@ -15,7 +15,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
-const dbUrl = 'mongodb://127.0.0.1:27017/EventO_DB';
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/EventO_DB';
 const MongoStore = require('connect-mongo');
 
 const mongoSanitize = require('express-mongo-sanitize');
@@ -52,11 +52,13 @@ app.use(mongoSanitize({
   replaceWith: '_'
 }));
 
+const secret = process.env.SECRET || 'badsecret';
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-      secret: 'badsecret'
+      secret
   }
 });
 
@@ -67,7 +69,7 @@ store.on("error", function(e) {
 const sessionConfig = {
   store,
   name : "session",
-  secret : "badsecret",
+  secret,
   resave : false,
   saveUninitialized : true,
   cookie : {
