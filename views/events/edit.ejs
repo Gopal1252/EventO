@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="grid grid-cols-6 gap-4">
-    <h1 class="mt-5 col-start-3 col-end-5 text-center text-3xl">Edit Your Event</h1>
+    <h1 class="mt-5 col-start-3 col-end-5 text-center text-3xl font-extrabold">Edit Your Event</h1>
     <div class="col-start-3 col-end-5 row-start-2">
         <form action="/events/<%=event._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="sm:col-span-3">

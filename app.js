@@ -15,6 +15,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
+const dbUrl = 'mongodb://127.0.0.1:27017/EventO_DB';
+const MongoStore = require('connect-mongo');
 
 const mongoSanitize = require('express-mongo-sanitize');
 
@@ -28,8 +30,9 @@ main().catch(err => {
     console.log(err);
 });
 
+// const dbUrl = process.env.DB_URL;
 async function main() { 
-  await mongoose.connect('mongodb://127.0.0.1:27017/EventO_DB');
+  await mongoose.connect(dbUrl);
   console.log("Database Connected");
 }
 
@@ -49,7 +52,20 @@ app.use(mongoSanitize({
   replaceWith: '_'
 }));
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+      secret: 'badsecret'
+  }
+});
+
+store.on("error", function(e) {
+  console.log("SESSION STORE ERROR", e)
+})
+
 const sessionConfig = {
+  store,
   name : "session",
   secret : "badsecret",
   resave : false,
